@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Col, Row } from "../components/Grid";
 import { Table, Tr, Td } from "../components/Table";
 import { ForwardRefInput, FormBtn } from "../components/Form";
+import Categories from "../components/Categories"
 
 function Comments({ username }) {
 	// Setting our component's initial state
@@ -74,19 +75,19 @@ function Comments({ username }) {
 		<Row>
 			<Col size='md-12'>
 				<form>
-					<Col size='sm-12'>
-						<ForwardRefInput ref={ titleInputElRef } value={formObject.body} onChange={handleInputChange} name='body' placeholder='your comment here' />
+					<Col size='sm-6' margin ="auto">
+						<ForwardRefInput ref={ titleInputElRef } value={formObject.body} onChange={handleInputChange} name='body' placeholder='Enter your request here' />
 					</Col>
 					<FormBtn
 						disabled={!formObject.body}
 						onClick={handleFormSubmit}>
-						Submit Comment
+						Submit Request
 					</FormBtn>
 				</form>
 			</Col>
 		</Row>,
 		<Row>
-			<Col size='md-12'>
+			<Col size='md-6'>
 				{comments.length ? (
 					<Table>
 						{comments.map(comment => (
@@ -108,6 +109,9 @@ function Comments({ username }) {
 				) : (
 					<h3>No Results to Display</h3>
 				)}
+			</Col>
+			<Col size="sm-6">
+			<Categories style={{ textAlign: "center", display: "block" }}/>
 			</Col>
 		</Row>,
 	</>;
