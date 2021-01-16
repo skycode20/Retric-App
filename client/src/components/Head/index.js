@@ -1,14 +1,16 @@
+//import React from "react";
 import React from "react";
 import useLogRender from "../../utils/useLogPath";
 
-function Nav() {
-	useLogRender();
 
+function Nav(props) {
+	useLogRender();
+	
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-light">
-		<a className="navbar-brand" href="#">
+		<a className="navbar-brand" href="/">
 			Retric
-  </a>
+  		</a>
 		<button
 			className="navbar-toggler"
 			data-toggle="collapse"
@@ -23,16 +25,17 @@ function Nav() {
 		<div className="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul className="navbar-nav mr-auto">
 				<li className="nav-item active">
-					<a className="nav-link" href="#">
-						Welcome! <span className="sr-only">(current)</span>
+					<a className="nav-link" href="/">
+						Welcome! <strong>{props.auth.username}</strong>  <span className="sr-only">(current)  </span>
 					</a>
 				</li>
 				<li className="nav-item">
-					<a className="nav-link" href="#">
-						Link
-		</a>
+					<a className="nav-link" href="/manage">
+						Manage your List
+					</a>
 				</li>
-				<li className="nav-item dropdown">
+			</ul>
+				{/* <li className="nav-item dropdown">
 					<a
 						className="nav-link dropdown-toggle"
 						href="#"
@@ -43,7 +46,7 @@ function Nav() {
 						aria-expanded="false"
 					>
 						Dropdown
-		</a>
+					</a>
 					<div className="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a className="dropdown-item" href="#">
 							Action
@@ -73,7 +76,7 @@ function Nav() {
 				<button className="btn btn-outline-success my-2 my-sm-0" type="submit">
 					Search
 	  </button>
-			</form>
+			</form> */}
 		</div>
 	</nav>
 	);

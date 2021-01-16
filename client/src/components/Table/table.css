@@ -1,0 +1,11 @@
+table{
+    width: 100%;
+}
+
+.table-title{
+   width: 20%; 
+   color: rgb(249, 249, 250);
+   font-family: 'Courier New', Courier, monospace;
+   font-size: medium;
+   background-color: rgb(5, 46, 82);
+}
