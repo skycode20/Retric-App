@@ -1,24 +1,31 @@
 import React, { useState, useEffect, useRef } from "react";
+import DeleteBtn from "../components/DeleteBtn";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row } from "../components/Grid";
 import { Table, Tr, Th, Td } from "../components/Table";
-import { ForwardRefInput, FormBtn } from "../components/Form";
+import { ForwardRefInput, TextArea, FormBtn } from "../components/Form";
 import Categories from "../components/Categories"
 import "../style.css";
 
-function Comments({ username }) {
+// function Manage({ username }) {
+//function Manage(props, user) {
+function Manage({ username }) {
+
 	// Setting our component's initial state
 	const [comments, setComments] = useState([]);
 	const [formObject, setFormObject] = useState({
 	  title: "",
+	  detail: "",
+	  offer: "",
+	  status: "A",
 	  username: ""
 	});
-
-	const [categoryState, setCategoryState] = useState("")
 	
-
-  
+	console.log("heyola - we are in manage");
+	// console.log(userName);
+	console.log("what is it");
+	//console.log(props);
 	
     // const [formSearch, setFormSearch] = useState({
 	// 	search: "",
@@ -33,7 +40,10 @@ function Comments({ username }) {
       // set user after successful component mount
       setFormObject({
 		 title: "",
-		 username: "", 
+		 detail: "",
+		 offer: "",
+		 status: "A",
+         username: "",
          username})
 
       loadComments();
@@ -50,16 +60,17 @@ function Comments({ username }) {
 			.catch((err) => console.log(err));
 	}
 
+	// Deletes a comment from the database with a given id, then reloads comments from the db
+	function deleteComment(id) {
+		API.deleteComment(id)
+			.then((res) => loadComments())
+			.catch((err) => console.log(err));
+	}
 
 	// Handles updating component state when the user types into the input field
 	function handleInputChange(event) {
 		const { name, value } = event.target;
 		setFormObject({ ...formObject, [name]: value });
-	}
-
-	function handleChange(event) {
-		setCategoryState(event.target.value);
-		//this.setState({value: event.target.value});
 	}
 
 	// function handleDetailChange(event) {
@@ -100,13 +111,21 @@ function Comments({ username }) {
 		event.preventDefault();
 		if (formObject.title.length > 3) {
 			console.log(formObject.title);
+			console.log(formObject.detail);
+			console.log(formObject.offer);
+			console.log(formObject.status);
 			API.saveComment({
 				title: formObject.title,
+				detail: formObject.detail,
+				offer: formObject.offer,
+				status: formObject.status,
 				username: formObject.username,
 			})
             .then(loadComments)
             .then(() => setFormObject({
 			   title: "",
+			   detail: "",
+			   offer: "",
                username: ""
             }))
 				.catch((err) => console.log(err));
@@ -116,72 +135,37 @@ function Comments({ username }) {
 	return <>
 		<Row>
 			<Col size='md-12'>
+				<h2 className="title">Add your Post</h2>
 				<form>
-					<Col size='sm-5' margin ="auto">
-						<ForwardRefInput ref={ titleInputElRef } value={formObject.title} onChange={handleInputChange} name='title' placeholder='Enter search post' />
+					<Col size='sm-6' margin ="auto">
+						<ForwardRefInput ref={ titleInputElRef } value={formObject.title} onChange={handleInputChange} name='title' placeholder='Enter your title here (required)' />
 					</Col>
-					<Col size='sm-4' margin ="auto">
-					<label>
-						Category: 
-						<select id ="category" defaultValue="" onChange={handleChange}>
-							<option value="art">Art</option>
-							<option value="culinary">Culinary</option>
-							<option value="exercise">Exercise</option>
-							<option value="home">Home</option>
-							<option value="music">Music</option>
-							<option value="sports">Sports</option>
-							<option value="technology">Technology</option>
-							<option value="other">other</option>
-						</select>
-					</label>
+					<Col size='sm-6' margin ="auto">
+						<TextArea value={formObject.detail} onChange={handleInputChange} name="detail" placeholder='Enter your request here (required)' />
+					</Col>
+					<Col size='sm-6' margin ="auto">
+						<TextArea value={formObject.offer} onChange={handleInputChange} name="offer" placeholder='Enter your offer here (required)' />
 					</Col>
 					<FormBtn
 						// disabled={!(formObject.body && formObject.detail)}
 						onClick={handleFormSubmit}>
-						Search
+						Submit Request
 					</FormBtn>
 				</form>
 			</Col>
 		</Row>,
 		<Row>
-			<Col size='md-12'>
-				<h2 className="title">List of all requests </h2>
-			</Col>
-		</Row>,
-			
-		{/* <Row>
-			<Col size='md-12'>
-				<h3 className="title">Post Search</h3>
-				<h2 className="title">Search</h2>
-			<Input
-                value={this.state.search}
-                onChange={this.handleSearchChange}
-                name="search"
-                placeholder="Key word (required)"
-              />
-			  <FormBtn
-				onClick={this.handleSearchSubmit}
-				className="btnStyling" variant="primary"
-              >
-                Search
-              </FormBtn>
-          	</Col>
-		</Row>, */}
-		<Row>
 			<Col size='md-8'>
 				{comments.length ? (
 					<Table>
 						<Tr>
-							<Th>Member</Th>
 							<Th>Title</Th>
 							<Th>Detail</Th>
-							<Th>Offer</Th>
 							<Th>Date</Th>
+							<Th>action</Th>
 						</Tr>
 						{comments.map(comment => (
 							<Tr key={comment._id}>
-								<Td><strong>{comment.username}</strong> 
-								</Td>
 								<Td>
 									<Link
 										to={"/comments/" + comment._id}
@@ -190,8 +174,10 @@ function Comments({ username }) {
 									</Link>
 								</Td>
 								<Td>{comment.detail}</Td>
-								<Td>{comment.offer}</Td>
 								<Td>{comment.date}</Td>
+								<Td>
+									<DeleteBtn onClick={() => deleteComment(comment._id)} />
+								</Td>
 							</Tr>
 						))}
 					</Table>
@@ -199,11 +185,11 @@ function Comments({ username }) {
 					<h3>No Results to Display</h3>
 				)}
 			</Col>
-			{/* <Col size="sm-4">
+			<Col size="sm-4">
 			<Categories style={{ textAlign: "center", display: "block" }}/>
-			</Col> */}
+			</Col>
 		</Row>,
 	</>;
 }
 
-export default Comments;
+export default Manage;

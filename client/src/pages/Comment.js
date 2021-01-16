@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
+import { FormBtn } from "../components/Form";
+
 import Card from "../components/Card";
 import API from "../utils/API";
 
@@ -16,14 +18,32 @@ function Comment() {
       .catch(err => console.log(err));
   }, [match.params.id])
 
+  // When the form is submitted, use the API.saveComment method to save the comment data
+	// Then reload comments from the database
+	function handleFormSubmit(event) {
+    event.preventDefault();		
+  }
+	
+
   return (
       <Container fluid>
         <Row>
-          <Col size="md-10 md-offset-1">
+          <Col size="md-6 md-offset-1">
             <article>
                <Card heading={comment.username}>
-                  {comment.body}
+                  <span><strong>Title:</strong> {comment.title}</span>
+                  <br />
+                  <span><strong>Detail:</strong> {comment.detail}</span>
+                  <br />
+                  <span><strong>Offer:</strong> {comment.offer}</span>
+                  <br />
+                  <span><strong>Date:</strong> {comment.date}</span>
                </Card>
+               <FormBtn
+						// disabled={!(formObject.body && formObject.detail)}
+						onClick={handleFormSubmit}>
+						Accept the proposal
+					</FormBtn>
             </article>
           </Col>
         </Row>
