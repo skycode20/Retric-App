@@ -43,7 +43,7 @@ a:hover {
 
 .footer {
   height: var(--footer-height);
-  line-height: 60px;
+  line-height: 30px;
 }
 
 body {
@@ -112,4 +112,21 @@ body {
   margin-top: 10px;
   width: 398px;
   margin-bottom: 16px;
+}
+
+.custom-select {
+  position: relative;
+  font-family: 'Roboto', sans-serif; 
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element: */
+}
+
+.select-selected {
+  background-color: rgb(220, 221, 222);
+}
+
+.img_Icon{
+  width: 27px;
 }

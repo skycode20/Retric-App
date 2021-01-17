@@ -28,6 +28,7 @@
     "mongoose": "^5.3.16",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "react-native-dropdown-picker": "^3.7.8"
   }
 }

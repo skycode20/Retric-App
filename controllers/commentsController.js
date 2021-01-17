@@ -16,6 +16,12 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  findByUser: function(req, res) {
+   db.Comment
+     .find({username: req.params.user })
+     .then(dbModel => res.json(dbModel))
+     .catch(err => res.status(422).json(err));
+ },
   create: function(req, res) {
      // if no user on the session
      if(!req.user) return res.status(401).end('user isnt authenticated')
@@ -28,7 +34,7 @@ module.exports = {
   },
   update: function(req, res) {
      db.Comment
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .findOneAndUpdate({ _id: req.body.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
