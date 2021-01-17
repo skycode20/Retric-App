@@ -5,7 +5,7 @@ import React from "react";
 export function Input(props) {
 	return (
 		<div className='form-group'>
-			<input className='form-control' {...props} />
+			<input type="text" className='form-control' {...props} />
 		</div>
 	);
 }
@@ -18,10 +18,9 @@ export const ForwardRefInput = React.forwardRef((props, ref) => (
 ));
 
 export function TextArea(props) {
-	
 	return (
 		<div className='form-group'>
-			<textarea rows="3" className='form-control' {...props} />
+			<textarea rows="2" className='form-control' {...props} />
 		</div>
 	);
 }
@@ -34,5 +33,26 @@ export function FormBtn(props) {
 			className='btn btn-dark rounded-0'>
 			{props.children}
 		</button>
+	);
+}
+
+export function Dropbox(props) {
+	return (
+		<div className='form-group'>
+			<label>
+				Category: 
+			</label>
+			<select id ="category" className="custom-select select-selected" defaultValue="" {...props}>
+				<option value="0">Select an option (required)</option>
+				<option value="art">Art</option>
+				<option value="culinary">Culinary</option>
+				<option value="exercise">Exercise</option>
+				<option value="home">Home</option>
+				<option value="music">Music</option>
+				<option value="sports">Sports</option>
+				<option value="technology">Technology</option>
+				<option value="other">other</option>
+			</select>
+		</div>
 	);
 }

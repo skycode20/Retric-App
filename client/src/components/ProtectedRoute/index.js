@@ -14,15 +14,14 @@ import Loading from "../../pages/Loading";
 //  export default ProtectedRoute;
 
 
-
+//
 function ProtectedRoute({ children }) {   
 
    function isLogged() {   
 
- 
-      console.log('here here here');
-      const logged =  window.sessionStorage.getItem("logged");
-      // const logged =  (children.props._id !== undefined) ? true : false;
+      // const logged =  window.sessionStorage.getItem("logged");
+      const logged =  (children.props._id !== undefined && children.props._id !== "") ? true : false;
+    
       console.log(logged);
       console.log(children.props.user)
       console.log('-----------');
@@ -35,7 +34,7 @@ function ProtectedRoute({ children }) {
    if (children.props.user === true){
       return (
          <Route >
-            {isLogged() ? children : <Redirect to="/login?blabla" />}
+            {isLogged() ? children : <Redirect to="/login" />}
          </Route>
       )
    

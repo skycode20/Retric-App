@@ -12,7 +12,7 @@ export function Table({ children }) {
 }
 
 export function Th({ children }) {
-	return <td scope="col" className="table-title">{children}</td>;
+	return <td scope="col" className="w-16 table-title">{children}</td>;
 }
 
 export function Tr(props) {
@@ -20,7 +20,7 @@ export function Tr(props) {
 }
 
 export function Td({ children }) {
-	return <td className="w-20">{children}</td>;
+	return <td className="w-16">{children}</td>;
 }
 
 export default Table;
