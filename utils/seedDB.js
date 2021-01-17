@@ -5,7 +5,8 @@ const { mongoOptions } = require("./config")
 // This file empties the Books collection and inserts the books below
 
 
-mongoose.connect(process.env.ATLAS_URL || "mongodb://localhost/mern",
+//mongoose.connect(process.env.ATLAS_URL || "mongodb://localhost/mern",
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/mern",
    mongoOptions
 );
 
@@ -18,11 +19,19 @@ const userSeed =
 ;
 const commentsSeeds = [
    {
-      body: "🚀 initial seed",
+      title: "🚀 initial seed",
+      detail: "Detail your post",
+      status: "A",
+      offer: "Explain your offer to members with maximum details",
+      category: "art",
       username: "Admin"
    },
    {
-      body: "👾 another",
+      title: "👾 another",
+      detail: "Explain your post",
+      status: "A",
+      offer: "Explain your offer to members",
+      category: "home",
       username: "Admin"
    },
 

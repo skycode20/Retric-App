@@ -5,16 +5,14 @@ function Footer() {
 	useLogRender();
 
 	return (
-		<footer class="footer">
+		<footer className="footer">
 
-			<div class="container-fluid h-25">
+			<div className="container-fluid h-25">
 
-				<div class="row">
-					<div class="col-lg-12 bg-light text-center text-bottom text-muted pt-3">
+				<div className="row">
+					<div className="col-lg-12 bg-light text-center text-bottom text-muted pt-3">
 						<p>Copyright © Retric 2021</p>
 					</div>
-
-
 				</div>
 
 			</div>

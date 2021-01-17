@@ -1,49 +1,38 @@
-import React, { useState, useEffect, useRef } from "react";
-import DeleteBtn from "../components/DeleteBtn";
+import React, { useState, useEffect } from "react";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row } from "../components/Grid";
-import { Table, Tr, Td } from "../components/Table";
-import { ForwardRefInput, FormBtn } from "../components/Form";
-import Categories from "../components/Categories"
+import { Table, Tr, Th, Td } from "../components/Table";
+import { Input, FormBtn } from "../components/Form";
+import "../style.css";
 
 function Comments({ username }) {
 	// Setting our component's initial state
 	const [comments, setComments] = useState([]);
 	const [formObject, setFormObject] = useState({
-      body: "",
-      username: ""
-   });
-   
-   // get input element ref for focus
-   const titleInputElRef = useRef();
+	  search: "",
+	  username: ""
+	});
 
+ 
 	// Load all comments and store them with setComments
 	useEffect(() => {
       // set user after successful component mount
       setFormObject({
-         body: "",
-         username: "", 
-         username})
+		 search: "",
+		 username: ""
+		})
 
       loadComments();
 
-      // focus on titleInputEl if ref exists
-      titleInputElRef.current.focus()
    }, [username]);
    
 
 	// Loads all comments and sets them to comments
 	function loadComments() {
 		API.getComments()
+			//.then((res) => console.log(res.data))
 			.then((res) => setComments(res.data))
-			.catch((err) => console.log(err));
-	}
-
-	// Deletes a comment from the database with a given id, then reloads comments from the db
-	function deleteComment(id) {
-		API.deleteComment(id)
-			.then((res) => loadComments())
 			.catch((err) => console.log(err));
 	}
 
@@ -57,52 +46,62 @@ function Comments({ username }) {
 	// Then reload comments from the database
 	function handleFormSubmit(event) {
 		event.preventDefault();
-		if (formObject.body) {
-			API.saveComment({
-				body: formObject.body,
-				username: formObject.username,
-			})
-            .then(loadComments)
+		if (formObject.search.length > 2) {
+			API.getSearchComment(formObject.search)
+			.then((res) => setComments(res.data))
             .then(() => setFormObject({
-               body: "",
-               username: ""
+			   search: "",
+	           username: ""
             }))
-				.catch((err) => console.log(err));
+			.catch((err) => console.log(err));
+		}
+		else{
+			loadComments();
 		}
 	}
 
 	return <>
 		<Row>
-			<Col size='md-12'>
+			<Col size='md-8'>
 				<form>
-					<Col size='sm-6' margin ="auto">
-						<ForwardRefInput ref={ titleInputElRef } value={formObject.body} onChange={handleInputChange} name='body' placeholder='Enter your request here' />
-					</Col>
+					<Input value={formObject.search} onChange={handleInputChange} name='search' id='search' placeholder='Enter your search here' />
 					<FormBtn
-						disabled={!formObject.body}
 						onClick={handleFormSubmit}>
-						Submit Request
+						Search
 					</FormBtn>
 				</form>
 			</Col>
 		</Row>,
 		<Row>
-			<Col size='md-6'>
+			<Col size='md-10'>
+				<h2 className="title">List of all requests </h2>
+			</Col>
+		</Row>,
+		<Row>
+			<Col size='md-10'>
 				{comments.length ? (
 					<Table>
+						<Tr>
+							<Th>Member</Th>
+							<Th>Title</Th>
+							<Th>Detail</Th>
+							<Th>Offer</Th>
+							<Th>Date</Th>
+						</Tr>
 						{comments.map(comment => (
 							<Tr key={comment._id}>
+								<Td><strong>{comment.username}</strong> 
+								</Td>
 								<Td>
 									<Link
 										to={"/comments/" + comment._id}
 										style={{ textAlign: "left", display: "block" }}>
-										<strong>{comment.username}:</strong> {comment.body}
+										<span>{comment.title}</span>
 									</Link>
 								</Td>
+								<Td>{comment.detail}</Td>
+								<Td>{comment.offer}</Td>
 								<Td>{comment.date}</Td>
-								<Td>
-									<DeleteBtn onClick={() => deleteComment(comment._id)} />
-								</Td>
 							</Tr>
 						))}
 					</Table>
@@ -110,9 +109,9 @@ function Comments({ username }) {
 					<h3>No Results to Display</h3>
 				)}
 			</Col>
-			<Col size="sm-6">
+			{/* <Col size="sm-4">
 			<Categories style={{ textAlign: "center", display: "block" }}/>
-			</Col>
+			</Col> */}
 		</Row>,
 	</>;
 }

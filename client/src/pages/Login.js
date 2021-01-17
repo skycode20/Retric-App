@@ -32,6 +32,9 @@ class Login extends Component {
         .then(res => {
           if(res.status === 200 ){
              this.props.setUserState(res.data)
+             window.sessionStorage.setItem("logged", true);
+             window.location.href = "/comments";
+             
           }
         })
         .catch(err => console.log(err));

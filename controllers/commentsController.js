@@ -10,11 +10,23 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
-     console.log(req.params.id)
     db.Comment
       .findById(req.params.id)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  findByUser: function(req, res) {
+    db.Comment
+     .find({username: req.params.user })
+     .then(dbModel => res.json(dbModel))
+     .catch(err => res.status(422).json(err));
+  },
+  findBySearch: function(req, res) {
+    db.Comment
+    //.find({title: new RegExp(req.params.search, 'i') })
+    .find({ title: { $regex: req.params.search, $options: 'i' } })
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
      // if no user on the session
@@ -28,7 +40,7 @@ module.exports = {
   },
   update: function(req, res) {
      db.Comment
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .findOneAndUpdate({ _id: req.body.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

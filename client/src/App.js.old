@@ -14,11 +14,9 @@ import ProtectedRoute from "./components/ProtectedRoute"
 
 function App() {
 	const [userState, setUserState] = useState({});
-	const [isUserLoginVerified, setIsUserLoginVerified] = useState(false);
 
 	useEffect(() => {
 		// auth user on first render
-		console.log("calling Authenticate")
 		authenticate()
 	}, []);
 
@@ -26,17 +24,10 @@ function App() {
 	function authenticate() {
 		return userAPI.authenticateUser()
 			.then(({ data }) => {
-				//console.log('user:', data);				
+				//console.log('user:', data);
 				setUserState(data);
-				//verify if user was authenticated and permited access to all pages, 
-				//otherwise wait the load API, then show the Loading page
-				setIsUserLoginVerified(true);
 			})
-			.catch((err) => {
-				setIsUserLoginVerified(true);
-				console.log('registered user:', err.response)
-			
-			});
+			.catch((err) => console.log('registered user:', err.response));
 	}
 
 	return (
@@ -48,13 +39,13 @@ function App() {
 				<Switch>
 					<Route
 						exact
-						path='/login'
+						path='/'
 						render={props => (
 							<Login
 								{...props}
 								userState={userState}
 								setUserState={setUserState}
-							/> 
+							/>
 						)}
 					/>
 					<Route
@@ -68,14 +59,25 @@ function App() {
 							/>
 						)}
 					/>
+					{/* <Route
+						exact
+						path='/manage'
+						render={props => (
+							<Manage
+								{...props}
+								authenticate={authenticate}
+								user={userState}
+							/>
+						)}
+					/> */}
 					<ProtectedRoute exact path={["/", "/comments"]}>
-						<Comments {...userState} user={isUserLoginVerified} />
+						<Comments {...userState} />
 					</ProtectedRoute>
 					<ProtectedRoute exact path='/comments/:id' >
-						<Comment {...userState} user={isUserLoginVerified} />
+						<Comment {...userState} />
 					</ProtectedRoute>
 					<ProtectedRoute exact path="/manage">
-						<Manage {...userState} user={isUserLoginVerified} />
+						<Comments {...userState} />
 					</ProtectedRoute>
 					<Route component={NoMatch} />
 				</Switch>
