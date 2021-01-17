@@ -19,9 +19,9 @@ router
   .route("/user/:user")
   .get(commentsController.findByUser);
 
-// Matches with "/api/comments/:user"
+// Matches with "/api/comments/:search"
 router
   .route("/search/:search")
-  .get(commentsController.findByUser);
+  .get(commentsController.findBySearch);
   
 module.exports = router;

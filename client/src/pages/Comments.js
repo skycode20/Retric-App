@@ -31,6 +31,7 @@ function Comments({ username }) {
 	// Loads all comments and sets them to comments
 	function loadComments() {
 		API.getComments()
+			//.then((res) => console.log(res.data))
 			.then((res) => setComments(res.data))
 			.catch((err) => console.log(err));
 	}
@@ -46,16 +47,16 @@ function Comments({ username }) {
 	function handleFormSubmit(event) {
 		event.preventDefault();
 		if (formObject.search.length > 2) {
-			console.log(formObject.search);
-			API.getSearchComment({
-				title: formObject.search,
-			})
-            .then(loadComments)
+			API.getSearchComment(formObject.search)
+			.then((res) => setComments(res.data))
             .then(() => setFormObject({
 			   search: "",
 	           username: ""
             }))
 			.catch((err) => console.log(err));
+		}
+		else{
+			loadComments();
 		}
 	}
 
@@ -63,9 +64,8 @@ function Comments({ username }) {
 		<Row>
 			<Col size='md-8'>
 				<form>
-					<Input value={formObject.search} onChange={handleInputChange} name='search' id='search' placeholder='Enter your search here (required)' />
-					<FormBtn id="search"
-						// disabled={!(formObject.body && formObject.detail)}
+					<Input value={formObject.search} onChange={handleInputChange} name='search' id='search' placeholder='Enter your search here' />
+					<FormBtn
 						onClick={handleFormSubmit}>
 						Search
 					</FormBtn>
