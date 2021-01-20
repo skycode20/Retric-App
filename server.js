@@ -1,8 +1,27 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+
+const app = express();
+
+// Bodyparser middleware here
+app.use(bodyParser.json());
+
+// MongoDB URI *** change database name***
+
+mongoose.connect(
+	process.env.MONGODB_URI || "mongodb://localhost/mern",
+	{
+	  useCreateIndex: true,
+	  useNewUrlParser: true,
+	  useUnifiedTopology: true 
+	}
+  );
+
 const { mongoOptions, sessionOptions } = require("./utils/config");
 const routes = require("./routes");
-const app = express();
+
+
 const session = require("express-session");
 // Requiring passport as we've configured it
 const passport = require("./utils/passport");
@@ -11,10 +30,9 @@ const logger = require("morgan");
 const PORT = process.env.PORT || 3001;
 
 // logging (development)
-app.use(logger("dev"));
+app.use(logger("dev")); 
 
-// Define middleware here
-app.use(express.urlencoded({ extended: true }));
+
 app.use(express.json());
 
 // Serve static assets from react build
