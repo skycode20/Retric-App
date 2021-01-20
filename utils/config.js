@@ -1,18 +1,6 @@
 module.exports = {
-	mongoOptions: {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-      autoIndex: false,
-      useFindAndModify: false
-	},
-	sessionOptions: {
-      secret: "keyboard cat",
-      name: "stats",
-		resave: false,
-		saveUninitialized: true,
-		cookie: {
-			expires: 1000 * 60 * 60 * 24,
-		},
-	},
+	mongoURI: 'mongodb+srv://retric-app:GroupSixProject10@cluster0.skmoz.mongodb.net/mern?retryWrites=true&w=majority'
+
+
 	// additional global configs
 };
