@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Col, Row } from "../components/Grid";
 import { Table, Tr, Th, Td } from "../components/Table";
 import { Input, FormBtn } from "../components/Form";
+import UtilDate from "../utils/Utils";
+import PeopleImage from "../img/people.jpg"
 import "../style.css";
 
 function Comments({ username }) {
@@ -62,23 +64,26 @@ function Comments({ username }) {
 
 	return <>
 		<Row>
-			<Col size='md-8'>
-				<form>
-					<Input value={formObject.search} onChange={handleInputChange} name='search' id='search' placeholder='Enter your search here' />
-					<FormBtn
-						onClick={handleFormSubmit}>
-						Search
-					</FormBtn>
-				</form>
-			</Col>
+			{/* <Col size='md-'> */}
+				<div className="col-md-8" style={{ display: "inline-block", float:"flex" }}>
+					<img src={PeopleImage} className="img_Post" alt="Group people"  /> 
+					<h2 className="title enter_text">List of all requests </h2>
+			{/* </Col> */}
+			{/* <Col size='md-6'> */}
+				{/* style={{ float:"bottom"}} */}
+				{/* <div className="d-flex justify-content-center" style={{ backgroundColor: "red", color: "white", display: "flex", justifycontent: "space-around"}}> */}
+					<form> 
+						<Input value={formObject.search} onChange={handleInputChange} name='search' id='search' placeholder='Enter your title search here' />
+						<FormBtn
+							onClick={handleFormSubmit}>
+							Search
+						</FormBtn>
+					</form>
+				</div>
+			{/* </Col> */}
 		</Row>,
 		<Row>
-			<Col size='md-10'>
-				<h2 className="title">List of all requests </h2>
-			</Col>
-		</Row>,
-		<Row>
-			<Col size='md-10'>
+			<Col size='md-12'>
 				{comments.length ? (
 					<Table>
 						<Tr>
@@ -101,7 +106,7 @@ function Comments({ username }) {
 								</Td>
 								<Td>{comment.detail}</Td>
 								<Td>{comment.offer}</Td>
-								<Td>{comment.date}</Td>
+								<Td>{UtilDate.formatDate(comment.date)}</Td>
 							</Tr>
 						))}
 					</Table>

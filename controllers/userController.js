@@ -19,6 +19,7 @@ module.exports = {
    signup: function (req, res) {
 		db.User.create({
          username: req.body.username,
+         fullname: req.body.fullname,
 			email: req.body.email,
 			password: req.body.password
 		})

@@ -3,7 +3,8 @@ import "./table.css";
 
 export function Table({ children }) {
 	return (
-		<table className="table table-dark table-striped text-center text-break">
+		// <table className="table table-dark table-striped text-center text-break">
+		<table class="demotbl">
 			<tbody> 
             {children}
          	</tbody>
@@ -12,7 +13,7 @@ export function Table({ children }) {
 }
 
 export function Th({ children }) {
-	return <td scope="col" className="w-16 table-title">{children}</td>;
+	return <td scope="col" className="th_Header w-16">{children}</td>;
 }
 
 export function Tr(props) {
@@ -20,7 +21,7 @@ export function Tr(props) {
 }
 
 export function Td({ children }) {
-	return <td className="w-16">{children}</td>;
+	return <td className="td_Col w-16">{children}</td>;
 }
 
 export default Table;

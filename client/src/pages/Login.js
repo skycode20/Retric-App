@@ -4,6 +4,7 @@ import userAPI from "../utils/userAPI";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { Input, FormBtn } from "../components/Form";
+import Jumbotron from "../components/Jumbotron";
 
 class Login extends Component {
   state = {
@@ -43,9 +44,13 @@ class Login extends Component {
 
   render() {
     return (
-      <Container fluid>
-        <Row>
-          <Col size="12">
+
+       <Container fluid>
+         <Row>
+          <Col size="8">
+          <Jumbotron />
+          </Col>
+         <Col size="4">
             <form>
               <Input
                 value={this.state.email}
@@ -73,7 +78,7 @@ class Login extends Component {
             </form>
           </Col>
         </Row>
-      </Container>
+       </Container>
     );
   }
 }
