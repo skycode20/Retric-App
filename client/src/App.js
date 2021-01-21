@@ -9,6 +9,7 @@ import NoMatch from "./pages/NoMatch";
 import Head from "./components/Head";
 import Footer from "./components/Footer";
 import Manage from "./pages/Manage";
+import Team from "./pages/team";
 import userAPI from "./utils/userAPI";
 import ProtectedRoute from "./components/ProtectedRoute"
 
@@ -77,7 +78,12 @@ function App() {
 					<ProtectedRoute exact path="/manage">
 						<Manage {...userState} user={isUserLoginVerified} />
 					</ProtectedRoute>
+					<ProtectedRoute exact path="/team">
+						<Team {...userState} user={isUserLoginVerified} />
+					</ProtectedRoute>
+
 					<Route component={NoMatch} />
+					
 				</Switch>
 			</Container>
 			{/* { userState.email ? <Redirect to="/comments" /> : <></>} */}
