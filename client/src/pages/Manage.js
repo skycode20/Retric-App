@@ -6,7 +6,10 @@ import { Col, Row } from "../components/Grid";
 import { Table, Tr, Th, Td } from "../components/Table";
 import { Input, TextArea, FormBtn, Dropbox } from "../components/Form";
 import EditIcon from "../img/edit_2.svg";
-import "../style.css";
+import ThinkImage from "../img/manage.jpg"
+import UtilDate from "../utils/Utils";
+// import "../style.css";
+import "./Manage.css";
 
 function Manage({ username }) {
 
@@ -103,7 +106,7 @@ function Manage({ username }) {
 					category: formObject.category,
 					username: username,
 				})
-				//.then(loadCommentsUser(formObject.username))
+				.then(loadCommentsUser(formObject.username))
 				.then(() => cleanUpState())
 				.catch((err) => console.log(err));
 			}
@@ -118,32 +121,37 @@ function Manage({ username }) {
 					category: formObject.category,
 					username: formObject.username,
 				})
-				//.then(loadCommentsUser(formObject.username))
+				.then(loadCommentsUser(formObject.username))
 				.then(() => cleanUpState())
 				.catch((err) => console.log(err));
 
 			}
 			
 		}
-		loadCommentsUser(username)
+		// loadCommentsUser(username)
 	}
 
 	return <>
 		<Row>
-			<Col size='md-12'>
+			<Col size='md-5'>
+				<div>
+					<img src={ThinkImage} className="img_Post" alt="Add Post"  /> 
+				</div>
+ 			</Col>
+			<Col size='md-7'>
 				<h2 className="title">Add your post</h2>
 				<form>
-					<Col size='sm-6' margin ="auto">
+					<Col size='sm-12' margin ="auto">
 						{/* <ForwardRefInput ref={ titleInputElRef } value={formObject.title} onChange={handleInputChange} name='title' id='title' placeholder='Enter your title here (required)' /> */}
 						<Input value={formObject.title} onChange={handleInputChange} name='title' id='title' placeholder='Enter your title here (required)' />
 					</Col>
-					<Col size='sm-6' margin ="auto">
+					<Col size='sm-12' margin ="auto">
 						<Dropbox value={formObject.category} onChange={handleInputChange} name="category" id="category" />
 					</Col>
-					<Col size='sm-6' margin ="auto">
+					<Col size='sm-12' margin ="auto">
 						<TextArea value={formObject.detail} onChange={handleInputChange} name="detail" id="detail" placeholder='Enter your request here (required)' />
 					</Col>
-					<Col size='sm-6' margin ="auto">
+					<Col size='sm-12' margin ="auto">
 						<TextArea value={formObject.offer} onChange={handleInputChange} name="offer" id="offer" placeholder='Enter your offer here (required)' />
 					</Col>
 					<FormBtn
@@ -169,26 +177,18 @@ function Manage({ username }) {
 							<Th>Detail</Th>
 							<Th>Offer</Th>
 							<Th>Date</Th>
-							<Th>action</Th>
+							<Th>Action</Th>
 						</Tr>
 						{comments.map(comment => (
 							<Tr key={comment._id}>
-								<Td>
-									<Link
-										to={"/comments/" + comment._id}
-										style={{ textAlign: "left", display: "block" }}>
-										<span>{comment.title}</span>
-									</Link>
-								</Td>
+								<Td>{comment.title}</Td>
 								<Td>{comment.category}</Td>
 								<Td>{comment.detail}</Td>
 								<Td>{comment.offer}</Td>
-								<Td>{comment.date}</Td>
+								<Td>{UtilDate.formatDate(comment.date)}</Td>
 								<Td>
-									<DeleteBtn onClick={() => deleteComment(comment._id)} />
+									<DeleteBtn onClick={() => deleteComment(comment._id)} alt="Remove post" />
 									<img src={EditIcon} className="img_Icon" role="button" alt="Edit post" onClick={() => handlePostEdit(comment._id)} />
-									
-     
 								</Td>
 							</Tr>
 						))}

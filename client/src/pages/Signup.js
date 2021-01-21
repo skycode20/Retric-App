@@ -4,13 +4,15 @@ import userAPI from "../utils/userAPI";
 import {  Redirect, Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { Input, FormBtn } from "../components/Form";
+import SignupImage from "../img/signup.jpg"
 
 class Signup extends Component {
   state = {
-    email: "1@1",
-    username: "one",
-    password: "1",
-    passwordConf: "1"
+    fullname: "",
+    email: "",
+    username: "",
+    password: "",
+    passwordConf: ""
   };
 
   componentDidMount() {
@@ -28,6 +30,7 @@ class Signup extends Component {
     if (this.state.email && this.state.password) {
       userAPI.signup({
         username: this.state.username,
+        fullname: this.state.fullname,
         email: this.state.email,
         password: this.state.password,
         passwordConf: this.state.passwordConf,
@@ -49,33 +52,58 @@ class Signup extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col size="12">
- 
+          <Col size='md-6'>
+          <div>
+            <img src={SignupImage} className="img_Post" alt="Add Post"  /> 
+          </div>
+        </Col>
+			    <Col size="6">
             <form>
+              <label>
+                Username: 
+              </label>
               <Input
                 value={this.state.username}
                 onChange={this.handleInputChange}
                 name="username"
-                placeholder="username (required)"
+                placeholder="Username (required)"
               />
+              <label>
+                Full Name: 
+              </label>
+              <Input
+                value={this.state.fullname}
+                onChange={this.handleInputChange}
+                name="fullname"
+                placeholder="Full name (required)"
+              />
+              <label>
+                Email: 
+              </label>
               <Input
                 value={this.state.email}
                 onChange={this.handleInputChange}
                 name="email"
-                placeholder="email (required)"
+                placeholder="Email (required)"
               />
+              <label>
+                Password: 
+              </label>
               <Input
                 value={this.state.password}
                 onChange={this.handleInputChange}
                 name="password"
-                placeholder="(required)"
+                placeholder="Password (required)"
                 type="password"
               />
+              <label>
+                Confirm password: 
+              </label>
               <Input
                 value={this.state.passwordConf}
                 onChange={this.handleInputChange}
                 name="passwordConf"
-                placeholder="(required)"
+                placeholder="Confirm password (required)"
                 type="password"
               />
               
