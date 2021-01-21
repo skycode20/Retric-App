@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DeleteBtn from "../components/DeleteBtn";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Col, Row } from "../components/Grid";
 import { Table, Tr, Th, Td } from "../components/Table";
 import { Input, TextArea, FormBtn, Dropbox } from "../components/Form";
@@ -87,13 +86,13 @@ function Manage({ username }) {
 		//Check that all fields are filled
 		if (formObject.title.length >= 3 && formObject.detail.length >= 3 && formObject.offer.length >= 3) {
 
-			console.log(formObject.title);
-			console.log(formObject.detail);
-			console.log(formObject.offer);
-			console.log(formObject.category);
-			console.log(formObject.status);
-			console.log(formObject.id);
-			console.log(formObject.username)
+			// console.log(formObject.title);
+			// console.log(formObject.detail);
+			// console.log(formObject.offer);
+			// console.log(formObject.category);
+			// console.log(formObject.status);
+			// console.log(formObject.id);
+			 console.log(formObject.username)
 
 			//Check if the id is empty, if true, add it to the database, otherwise, update the record in the database
 			if (formObject._id === undefined || formObject._id === ""){
@@ -124,11 +123,9 @@ function Manage({ username }) {
 				.then(loadCommentsUser(formObject.username))
 				.then(() => cleanUpState())
 				.catch((err) => console.log(err));
-
 			}
-			
 		}
-		// loadCommentsUser(username)
+		loadCommentsUser(username)
 	}
 
 	return <>
@@ -142,7 +139,6 @@ function Manage({ username }) {
 				<h2 className="title">Add your post</h2>
 				<form>
 					<Col size='sm-12' margin ="auto">
-						{/* <ForwardRefInput ref={ titleInputElRef } value={formObject.title} onChange={handleInputChange} name='title' id='title' placeholder='Enter your title here (required)' /> */}
 						<Input value={formObject.title} onChange={handleInputChange} name='title' id='title' placeholder='Enter your title here (required)' />
 					</Col>
 					<Col size='sm-12' margin ="auto">
@@ -155,12 +151,10 @@ function Manage({ username }) {
 						<TextArea value={formObject.offer} onChange={handleInputChange} name="offer" id="offer" placeholder='Enter your offer here (required)' />
 					</Col>
 					<FormBtn
-						// disabled={!(formObject.body && formObject.detail)}
 						onClick={handleFormSubmit}>
 						Submit Request
 					</FormBtn>
 					<FormBtn
-						// disabled={!(formObject.body && formObject.detail)}
 						onClick={cleanUpState}>
 						Clean
 					</FormBtn>

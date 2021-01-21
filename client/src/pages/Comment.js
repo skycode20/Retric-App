@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import { FormBtn } from "../components/Form";
+//import { FormBtn } from "../components/Form";
 
 import Card from "../components/Card";
 import API from "../utils/API";
@@ -28,7 +28,7 @@ function Comment() {
   return (
       <Container fluid>
         <Row>
-          <Col size="md-6 md-offset-1">
+          <Col size="md-10 md-offset-1">
             <article>
                <Card heading={comment.username}>
                   <span><strong>Title:</strong> {comment.title}</span>
@@ -39,11 +39,10 @@ function Comment() {
                   <br />
                   <span><strong>Date:</strong> {comment.date}</span>
                </Card>
-               <FormBtn
-						// disabled={!(formObject.body && formObject.detail)}
+               {/* <FormBtn
 						onClick={handleFormSubmit}>
 						Accept the proposal
-					</FormBtn>
+					</FormBtn> */}
             </article>
           </Col>
         </Row>
